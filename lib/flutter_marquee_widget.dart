@@ -31,7 +31,9 @@ class _State extends State<FlutterMarqueeWidget> {
   List<Widget> currWidgetList;
 
   final GlobalKey _animatedListKey = GlobalKey<AnimatedListState>();
-  
+
+  Timer _timer;
+
   @override
   void initState() {
     super.initState();
@@ -44,8 +46,15 @@ class _State extends State<FlutterMarqueeWidget> {
     }
   }
 
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+    super.dispose();
+  }
+
   void _start() {
-    Timer.periodic(widget.duration, (_) async {
+    _timer=Timer.periodic(widget.duration, (_) async {
       // 删除第一个
       Widget delete = currWidgetList.removeAt(0);
       (_animatedListKey.currentState as AnimatedListState).removeItem(
