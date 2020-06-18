@@ -66,7 +66,7 @@ class _State extends State<FlutterMarqueeWidget> {
       );
 
       // 等待一定时间
-      await Future.delayed(Duration(milliseconds: 1000));
+      await Future.delayed(Duration(milliseconds: 300));
 
       // 在末尾添加新的widget
       currWidgetList.add(widget.items[currIndex]);
