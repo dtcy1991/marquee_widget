@@ -34,20 +34,25 @@ class _State extends State<FlutterMarqueeWidget> {
 
   Timer _timer;
 
+  bool _running=false;
+
   @override
   void initState() {
     super.initState();
-    
+    _running=widget.running;
     currIndex = widget.initialItemCount;
     currWidgetList = widget.items.sublist(0, widget.initialItemCount);
 
-    if (widget.running) {
+    if (_running) {
       _start();
     }
   }
 
   @override
   void dispose() {
+    setState(() {
+      _running=false;
+    });
     _timer?.cancel();
     _timer = null;
     super.dispose();
@@ -75,7 +80,7 @@ class _State extends State<FlutterMarqueeWidget> {
       );
 
       // 等待一定时间
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(Duration(milliseconds: 200));
 
       // 在末尾添加新的widget
       currWidgetList.add(widget.items[currIndex]);
